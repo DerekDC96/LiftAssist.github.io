@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    1 rep-max
+{% endblock %}
+
+{% block main %}
+    <script>
+        function calculate()
+        {
+            let weight = Math.round(document.querySelector("#weight").value * 10) / 10;
+            let reps = Math.floor(document.querySelector("#reps").value)
+
+            let max = Math.round(weight * (36/( 37 - reps)) * 100) /100
+            document.getElementById("myText").innerHTML = max;
+        }
+    </script>
+    <form onsubmit="calculate(); return false;">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" id="weight" placeholder="Weight" type="number">
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="reps" placeholder="Reps" type="number" step="1">
+        </div>
+        <button class="btn btn-primary" type="submit">Calculate</button>
+    </form>
+    <p>Estimated 1RM is <span id="myText"></span></p>
+{% endblock %}

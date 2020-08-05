@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change password
+{% endblock %}
+
+{% block main %}
+    {% if success == True %}
+        <p>
+            Password successfully changed
+        </p>
+    {% endif %}
+    {% if error ==  True %}
+        <p>Error: {{message}}</p>
+    {% endif %}
+    <form action="/change" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="old" placeholder="Old password" type="password">
+        </div>
+
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" name="new" placeholder="New password" type="password">
+        </div>
+
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" name="confirm_new" placeholder="Confirm new password" type="password">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Change password</button>
+    </form>
+{% endblock %}

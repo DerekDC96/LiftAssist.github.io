@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Enter sets
+{% endblock %}
+
+{% block main %}
+    {% if error == True %}
+        <p><h>Error with login, check username or password</h></p></P>
+    {% endif %}
+
+
+    <form action="/LogSets" method="post">
+        <select name= 'select'>
+        {% for item in array %}
+            <option value= "{{item}}" SELECTED>{{item}}</option>"
+        {% endfor %}
+        </select>
+        <div class="form-group">
+            <input autocomplete="on" autofocus class="form-control" name="sets" placeholder="Sets" type="number" step="1">
+        </div>
+        <div class="form-group">
+            <input autocomplete="on" autofocus class="form-control" name="reps" placeholder="Repetitions" type="number" step="1">
+        </div>
+        <div class="form-group">
+            <input autocomplete="on" autofocus class="form-control" name="weight" placeholder="Weight" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Enter Sets</button>
+    </form>
+{% endblock %}

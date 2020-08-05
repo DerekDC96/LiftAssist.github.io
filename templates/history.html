@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Progress Tracker
+{% endblock %}
+
+{% block main %}
+    <p>Estimates your highest 1 RM of the day and plots that over time</p>
+    {% if error == True %}
+        <p>{{message}}</p>
+    {% endif %}
+
+    <form action="/history" method="post">
+        <select name= 'select'>
+            <option SELECTED>Select lift</option>
+        {% for item in array %}
+            <option value= "{{item}}">{{item}}</option>"
+        {% endfor %}
+        </select>
+        <p></p>
+        <p><button class="btn btn-primary" type="submit">Get graph</button></p>
+    </form>
+
+    <br>
+    <br>
+
+    {% if lift %}
+        <p>Estimated 1 RM of {{lift}} over time
+            <img src="{{ "static/output.png" + var }}" alt="Progression graph">
+        </p>
+    {% endif %}
+
+    <br>
+
+    {% if lift%}
+        <table>
+            <tr>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Weight</th>
+                <th>Timestamp</th>
+            </tr>
+            {% for row in table %} 
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        
+    {% endif %}
+{% endblock %}

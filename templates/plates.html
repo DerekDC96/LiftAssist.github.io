@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Plate calculator
+{% endblock %}
+
+{% block main %}
+    <script>
+        function plates()
+        {
+            event.preventDefault()
+            // this line is necessary because javascript concatenates null + "text" as "nulltext"...
+            let myText = ""
+
+            let bar = Math.round(document.querySelector("#bar").value)
+            let current = Math.round(document.querySelector("#current").value)
+            let target = Math.round(document.querySelector("#target").value)
+
+            if (current < bar || target < bar || current === target || target == null) {
+                return
+            }
+
+            let current_side = (current - bar) / 2
+            let target_side = (target - bar) / 2
+
+            let current_check = current_side
+            let target_check = target_side
+
+            // array for plate weights
+            let plates = [45, 35, 25, 10, 5, 2.5, 1, 0.5]
+            // array for current plate configuration
+            var current_config = []
+            // array for target plate configuration
+            var target_config = []
+
+            // populate current and target array
+            for (let i = 0; i < 8; i++) {
+                // calc number of plates, update remaining weight left of bar
+                current_config.push(Math.floor(current_check/plates[i]))
+                current_check = current_check - current_config[i] * plates[i]
+
+                target_config.push(Math.floor(target_check/plates[i]))
+                target_check = target_check - target_config[i] * plates[i]
+            }
+
+            // determine the first plate they differ at and remove plates
+            for (var k = 0; k < 8; k++) {
+                if (target_config[k] != current_config[k]) {
+                    // find all the lighter plates
+                    for (var n = 0; n < 8 - k -1; n++) {
+                        if (current_config[7-n] != 0) {
+                            console.log("remove " + current_config[7-n] + " of " + plates[7-n] + " lbs")
+                            myText += "remove " + current_config[7-n] + " of " + plates[7-n] + " lbs <br>"
+                        }
+                    }
+                    if (target_config[k] < current_config[k]) {
+                        console.log("remove " + (current_config[k] - target_config[k]) + " of " + plates[k] + " lbs")
+                        myText += ("remove " + (current_config[k] - target_config[k]) + " of " + plates[k] + " lbs <br>")
+                    }
+                    break
+                }
+            }
+            // for the special case
+            if (target_config[k] > current_config[k]) {
+                console.log("add " + (target_config[k] - current_config[k])+ " of " + plates[k] + " lbs")
+                myText += ("add " + (target_config[k] - current_config[k])+ " of " + plates[k] + " lbs <br>")
+            }
+            // starting 1 plate after the point where they differ first, add plates
+            for (let x = k + 1; x < 8 ; x++) {
+                if (target_config[x] != 0){
+                    console.log("add " + target_config[x] + " of " + plates[x] + " lbs")
+                    myText += ("add " + target_config[x] + " of " + plates[x] + " lbs <br>")
+                }
+            }
+            document.getElementById("myText").innerHTML = myText
+
+            myText1 = "On each side, the target configuration should have "
+            for (let y = 0; y < 8; y++) {
+                if (target_config[y] != 0) {
+                    myText1 += target_config[y] + " x " + plates[y] + " lbs, "
+                }
+            }
+            document.getElementById("myText1").innerHTML = myText1
+        }
+    </script>
+
+
+    <form onsubmit="plates(); return true;">
+        <div class="form-group">
+            Bar weight =
+            <input autocomplete="off" autofocus class="form-control" id="bar" placeholder="Bar weight" type="number">
+        </div>
+        <div class="form-group">
+            Current total weight =
+            <input class="form-control" id="current" placeholder="Current weight" type="number">
+        </div>
+        <div class="form-group">
+            Target total weight =
+            <input class="form-control" id="target" placeholder="Target weight" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Calculate</button>
+    </form>
+    <p>The steps are to: <br> <span id="myText"></span> </p>
+
+    <p><span id="myText1"></span></p>
+
+{% endblock %}

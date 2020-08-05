@@ -1,0 +1,21 @@
+things i've learned through this project
+
+1. sqlite3 "select" returns a list of tuples
+2. sqlite3 "select" requires the second argument to be a tuple
+2. a tuple is an immutable list.
+3. cs50 sql "select" returns a list of dicts, where the key = columnheadername
+    - far more useful and intuitive to access a list of dicts rather than a list if tuples
+    - pandas can turn list of tuples/dicts into a dataframe (better with list of dicts due to preservation of column headers)
+4. pandas/matplotlib for generating and saving plots
+5. general javascript stuff
+6. general html stuff
+7. session[keyname] is a module that gives you a variable that allows you to store a value across multiple flask routes 
+8. general sql stuff
+    -use (?, ?) as placeholders for your variables unless you want to be vulnerable to sql injection
+9. a workspace is ??? something i dont understand
+10. a virtual environment is ??? something i dont understand
+11. I had to do pip install module_name for some modules, whilst others could just be imported
+12. images are cached when you load a webpage
+    - if you want to display an image with fixed filename, but dynamic content, you have to trick the image caching system
+    - aka Cache-busting
+13. 
